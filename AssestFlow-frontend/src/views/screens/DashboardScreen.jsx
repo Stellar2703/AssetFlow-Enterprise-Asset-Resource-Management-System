@@ -5,13 +5,12 @@ export default function DashboardScreen({ currentUser, assets, maintenanceReques
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      {/* Welcome Banner */}
+      
       <div className="welcome-banner">
         <h2>Welcome to your Dashboard, {currentUser?.name} 👋</h2>
         <p>You have access to the system as a <strong>{currentUser?.role}</strong>.</p>
       </div>
 
-      {/* Quick Action Grid */}
       <div className="grid-features">
         {(currentUser?.role === 'Admin' || currentUser?.role === 'Asset Manager') && (
           <div className="feature-card">
@@ -48,7 +47,6 @@ export default function DashboardScreen({ currentUser, assets, maintenanceReques
         </div>
       </div>
 
-      {/* Overdue Return Alerts */}
       <div className="card-flow">
         <h3 style={{ marginBottom: '12px' }}>🚨 Overdue Return Warnings</h3>
         <div className="table-container">

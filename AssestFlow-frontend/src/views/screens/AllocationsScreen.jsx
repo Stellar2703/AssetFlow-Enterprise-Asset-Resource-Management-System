@@ -15,7 +15,7 @@ export default function AllocationsScreen(props) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      {/* Sub tabs nav */}
+      
       <div className="tab-menu" style={{ marginBottom: 0 }}>
         <button className={`tab-link ${allocationTab === 'allocations' ? 'active' : ''}`} onClick={() => setAllocationTab('allocations')}>
           🔗 Active Allocations
@@ -25,7 +25,6 @@ export default function AllocationsScreen(props) {
         </button>
       </div>
 
-      {/* Sub tabs panels */}
       {allocationTab === 'allocations' && (
         <div className="card-flow">
           <h3>Active Allocation Logs ({allocations.length})</h3>

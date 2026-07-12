@@ -3,7 +3,7 @@ import React from 'react';
 export default function BookingsScreen({ currentUser, bookings, assets, setModalType, handleCancelBooking }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      {/* Bookable Assets list */}
+      
       <div className="card-flow">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
           <h3 style={{ margin: 0 }}>Shared Bookable Resources</h3>
@@ -24,7 +24,6 @@ export default function BookingsScreen({ currentUser, bookings, assets, setModal
         </div>
       </div>
 
-      {/* Calendar Slots lists */}
       <div className="card-flow">
         <h3>Active Schedules & Reserved Slots</h3>
         <div className="table-container">

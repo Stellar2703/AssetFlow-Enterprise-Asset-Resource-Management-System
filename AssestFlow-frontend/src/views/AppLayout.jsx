@@ -4,7 +4,6 @@ import Header from './components/Header';
 import KPICards from './components/KPICards';
 import Modals from './components/Modals';
 
-// Import Screens
 import DashboardScreen from './screens/DashboardScreen';
 import AssetsScreen from './screens/AssetsScreen';
 import AllocationsScreen from './screens/AllocationsScreen';
@@ -55,7 +54,7 @@ export default function AppLayout({ controller }) {
 
   return (
     <div className="flex flex-row w-full min-h-screen bg-body-bg text-text-main transition-colors duration-300">
-      {/* Sidebar navigation */}
+      
       <Sidebar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -66,7 +65,6 @@ export default function AppLayout({ controller }) {
         onLogout={handleLogout}
       />
 
-      {/* Main page panel */}
       <main className="flex-grow p-10 overflow-y-auto flex flex-col gap-8 max-w-[calc(100%-280px)]">
         <Header
           activeTab={activeTab}
@@ -74,7 +72,6 @@ export default function AppLayout({ controller }) {
           onSync={loadAllData}
         />
 
-        {/* Global stats metrics row (hidden on notifications/setup to avoid layout noise) */}
         {activeTab !== 'notifications' && activeTab !== 'org' && (
           <KPICards
             analytics={analytics}
@@ -85,7 +82,6 @@ export default function AppLayout({ controller }) {
           />
         )}
 
-        {/* Render Tab Screens */}
         <div className="w-full flex-grow">
           {activeTab === 'dashboard' && (
             <DashboardScreen
@@ -194,7 +190,6 @@ export default function AppLayout({ controller }) {
         </div>
       </main>
 
-      {/* Render Modals overlays */}
       <Modals
         modalType={modalType}
         setModalType={setModalType}

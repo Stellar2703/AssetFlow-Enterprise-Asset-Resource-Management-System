@@ -5,7 +5,6 @@ export default function ReportsScreen({ analytics, departments, categories }) {
     return <div className="card-flow">No aggregated analytics dataset available. Check DB connection.</div>;
   }
 
-  // Helper values for maximum limits
   const maxDept = Math.max(...Object.values(analytics.deptAllocations || {}), 1);
   const maxMaint = Math.max(...Object.values(analytics.maintenanceFreq || {}), 1);
   const maxResource = Math.max(...Object.values(analytics.resourceUsage || {}), 1);
@@ -13,7 +12,7 @@ export default function ReportsScreen({ analytics, departments, categories }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      {/* Metrics Row */}
+      
       <div className="grid-kpi">
         <div className="kpi-card" style={{ flexGrow: 1 }}>
           <span className="kpi-title">Total Inventory Count</span>
@@ -32,7 +31,7 @@ export default function ReportsScreen({ analytics, departments, categories }) {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '20px' }}>
-        {/* Department allocations bar chart */}
+        
         <div className="card-flow">
           <h3>Asset Allocations by Department</h3>
           <div className="chart-bar-container" style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '14px' }}>
@@ -53,7 +52,6 @@ export default function ReportsScreen({ analytics, departments, categories }) {
           </div>
         </div>
 
-        {/* Maintenance frequency bar chart */}
         <div className="card-flow">
           <h3>Maintenance Defect Log Counts by Category</h3>
           <div className="chart-bar-container" style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '14px' }}>
@@ -76,7 +74,7 @@ export default function ReportsScreen({ analytics, departments, categories }) {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '20px' }}>
-        {/* Booking usages */}
+        
         <div className="card-flow">
           <h3>Shared Resource Bookings Utilizations</h3>
           <div className="chart-bar-container" style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '14px' }}>
@@ -97,7 +95,6 @@ export default function ReportsScreen({ analytics, departments, categories }) {
           </div>
         </div>
 
-        {/* Hourly peak heatmap */}
         <div className="card-flow">
           <h3>Peak Booking Calendar Load Heatmap (Hourly)</h3>
           <p style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '12px' }}>

@@ -52,7 +52,7 @@ export default function AuditsScreen(props) {
                           className="btn btn-primary btn-xs"
                           onClick={() => {
                             setSelectedAudit(audit);
-                            // Reset local answers
+                            
                             const initAnswers = {};
                             audit.auditItems?.forEach(item => {
                               initAnswers[item.assetId] = { status: item.status, notes: item.notes };

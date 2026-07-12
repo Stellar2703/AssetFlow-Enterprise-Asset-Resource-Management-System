@@ -15,7 +15,7 @@ export default function AssetsScreen(props) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      {/* Search and Filters panel */}
+      
       <div className="card-flow filter-panel">
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
           <input
@@ -60,7 +60,6 @@ export default function AssetsScreen(props) {
         </div>
       </div>
 
-      {/* Main Asset table grid */}
       <div className="card-flow">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
           <h3 style={{ margin: 0 }}>Registered Assets ({assets.length})</h3>

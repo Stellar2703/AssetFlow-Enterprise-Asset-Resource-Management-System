@@ -3,7 +3,7 @@ import React from 'react';
 export default function NotificationsScreen({ currentUser, notifications, activityLogs, handleReadNotification }) {
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '20px' }}>
-      {/* Alerts inbox */}
+      
       <div className="card-flow">
         <h3>User Notifications & Alert Inbox</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '12px' }}>
@@ -27,7 +27,6 @@ export default function NotificationsScreen({ currentUser, notifications, activi
         </div>
       </div>
 
-      {/* Admin Activity Logs */}
       {(currentUser?.role === 'Admin' || currentUser?.role === 'Asset Manager') && (
         <div className="card-flow">
           <h3>System Audit Trail (Security Log)</h3>

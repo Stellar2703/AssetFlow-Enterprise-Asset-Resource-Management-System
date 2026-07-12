@@ -42,7 +42,7 @@ export default function Modals(props) {
 
   return (
     <>
-      {/* Register Asset Modal */}
+      
       {modalType === 'registerAsset' && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -131,7 +131,6 @@ export default function Modals(props) {
                 <label htmlFor="sharedBookable">Mark as Shared / Bookable Resource (e.g. Meeting Room, Projector)</label>
               </div>
 
-              {/* Dynamic custom fields */}
               {assetForm.categoryId && categories.find(c => c.id === assetForm.categoryId)?.customFields.map(f => (
                 <div className="form-group" key={f.name}>
                   <label>{f.label}</label>
@@ -158,7 +157,6 @@ export default function Modals(props) {
         </div>
       )}
 
-      {/* Allocate Asset Modal */}
       {modalType === 'allocateAsset' && selectedAsset && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -219,7 +217,6 @@ export default function Modals(props) {
         </div>
       )}
 
-      {/* Return Asset Modal */}
       {modalType === 'returnAsset' && selectedAsset && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -259,7 +256,6 @@ export default function Modals(props) {
         </div>
       )}
 
-      {/* Transfer Request Modal */}
       {modalType === 'transferRequest' && selectedAsset && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -315,7 +311,6 @@ export default function Modals(props) {
         </div>
       )}
 
-      {/* Asset History Modal */}
       {modalType === 'history' && selectedAsset && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -368,7 +363,6 @@ export default function Modals(props) {
         </div>
       )}
 
-      {/* Book Resource Modal */}
       {modalType === 'bookResource' && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -432,7 +426,6 @@ export default function Modals(props) {
         </div>
       )}
 
-      {/* Raise Maintenance Modal */}
       {modalType === 'raiseMaintenance' && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -485,7 +478,6 @@ export default function Modals(props) {
         </div>
       )}
 
-      {/* Add Department Modal */}
       {modalType === 'addDept' && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -533,7 +525,6 @@ export default function Modals(props) {
         </div>
       )}
 
-      {/* Add Category Modal */}
       {modalType === 'addCategory' && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -586,7 +577,6 @@ export default function Modals(props) {
         </div>
       )}
 
-      {/* Create Audit Cycle Modal */}
       {modalType === 'createAudit' && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -689,7 +679,6 @@ export default function Modals(props) {
         </div>
       )}
 
-      {/* Auditor Checksheet Modal */}
       {modalType === 'auditChecksheet' && selectedAudit && (
         <div className="modal-overlay">
           <div className="modal-content" style={{ maxWidth: '800px' }}>

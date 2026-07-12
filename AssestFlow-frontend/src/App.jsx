@@ -8,7 +8,6 @@ function App() {
   const controller = useAppController();
   const { currentUser, token, authMode, setAuthMode, authForm, setAuthForm, handleAuthSubmit, toasts } = controller;
 
-  // Render a loading state during session recovery
   if (token && !currentUser) {
     return (
       <div className="flex h-screen items-center justify-center bg-body-bg text-text-main">
@@ -37,7 +36,6 @@ function App() {
         />
       )}
       
-      {/* Dynamic toaster alerts */}
       <ToastList
         toasts={toasts}
         onClose={(id) => controller.setToasts(prev => prev.filter(t => t.id !== id))}

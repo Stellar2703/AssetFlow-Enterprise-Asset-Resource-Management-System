@@ -32,10 +32,8 @@
   --animate-spin: spin 1s linear infinite;
 }
 
-/* Custom dark mode variant matching .dark on <html> or <body> */
 @variant dark (&:where(.dark, .dark *));
 
-/* Map color variables to dark mode */
 .dark {
   --color-primary: #818cf8;
   --color-primary-hover: #6366f1;
@@ -69,7 +67,6 @@ body {
   margin: 0;
 }
 
-/* Scrollbar styles to look nice */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -85,7 +82,6 @@ body {
   background: var(--color-text-muted);
 }
 
-/* Input & Form Elements */
 input[type="text"],
 input[type="number"],
 input[type="date"],
@@ -131,7 +127,6 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
-/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -196,7 +191,6 @@ input[type="checkbox"] {
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
 }
 
-/* Button Sizes */
 .btn-sm {
   padding: 0.375rem 0.75rem;
   font-size: 0.75rem;
@@ -209,7 +203,6 @@ input[type="checkbox"] {
   border-radius: 0.375rem;
 }
 
-/* Select option buttons */
 .btn-select {
   padding: 0.25rem 1.5rem 0.25rem 0.5rem;
   font-size: 0.75rem;
@@ -251,7 +244,6 @@ input[type="checkbox"] {
   color: var(--color-text-heading);
 }
 
-/* Card and Banners */
 .card-flow {
   background-color: var(--color-card-bg);
   border: 1px solid var(--color-border-color);
@@ -324,7 +316,6 @@ input[type="checkbox"] {
   line-height: 1.4;
 }
 
-/* Tables & Lists */
 .table-container {
   overflow-x: auto;
   width: 100%;
@@ -385,7 +376,6 @@ input[type="checkbox"] {
   font-family: var(--font-mono);
 }
 
-/* Badges */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -400,7 +390,6 @@ input[type="checkbox"] {
   white-space: nowrap;
 }
 
-/* Condition Badges */
 .condition-new {
   background-color: var(--color-secondary-light);
   color: var(--color-secondary);
@@ -418,7 +407,6 @@ input[type="checkbox"] {
   color: var(--color-danger);
 }
 
-/* Status Badges */
 .status-available {
   background-color: var(--color-secondary-light);
   color: var(--color-secondary);
@@ -477,7 +465,6 @@ input[type="checkbox"] {
   color: var(--color-text-muted);
 }
 
-/* Priority Badges */
 .priority-low {
   background-color: var(--color-secondary-light);
   color: var(--color-secondary);
@@ -500,7 +487,6 @@ input[type="checkbox"] {
   color: var(--color-primary);
 }
 
-/* Navigation Tabs */
 .tab-menu {
   display: flex;
   gap: 0.5rem;
@@ -534,7 +520,6 @@ input[type="checkbox"] {
   border-bottom-color: var(--color-primary);
 }
 
-/* Modals Layout */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -623,7 +608,6 @@ input[type="checkbox"] {
   }
 }
 
-/* KPI and Mini cards */
 .kpi-card {
   padding: 1rem;
   border-radius: 1rem;
@@ -639,7 +623,6 @@ input[type="checkbox"] {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
-/* Notifications and Items */
 .notification-item {
   transition: all 0.2s ease;
   border-left: 4px solid transparent !important;
@@ -659,7 +642,6 @@ input[type="checkbox"] {
   background-color: rgba(129, 140, 248, 0.05) !important;
 }
 
-/* Animations */
 @keyframes slide-in {
   from {
     transform: translateX(100%);

@@ -6,26 +6,22 @@ import {
 } from '../models/services';
 
 export function useAppController() {
-  // Theme state
+  
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem('theme') === 'dark' || 
     window.matchMedia('(prefers-color-scheme: dark)').matches
   );
 
-  // Authentication State
   const [token, setToken] = useState(getStoredToken());
   const [currentUser, setCurrentUser] = useState(null);
-  const [authMode, setAuthMode] = useState('login'); // 'login' | 'signup'
+  const [authMode, setAuthMode] = useState('login'); 
   const [authForm, setAuthForm] = useState({ name: '', email: '', password: '' });
 
-  // Navigation State
-  const [activeTab, setActiveTab] = useState('dashboard'); // 'dashboard' | 'assets' | 'allocations' | 'bookings' | 'maintenance' | 'audits' | 'org' | 'reports' | 'logs' | 'notifications'
+  const [activeTab, setActiveTab] = useState('dashboard'); 
   
-  // Tab states for Sub-tabs
-  const [orgTab, setOrgTab] = useState('departments'); // 'departments' | 'categories' | 'directory'
-  const [allocationTab, setAllocationTab] = useState('allocations'); // 'allocations' | 'transfers'
+  const [orgTab, setOrgTab] = useState('departments'); 
+  const [allocationTab, setAllocationTab] = useState('allocations'); 
 
-  // Master Data Lists
   const [assets, setAssets] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -39,18 +35,14 @@ export function useAppController() {
   const [activityLogs, setActivityLogs] = useState([]);
   const [analytics, setAnalytics] = useState(null);
 
-  // Search & Filter States
   const [assetSearch, setAssetSearch] = useState({ q: '', categoryId: '', status: '', location: '' });
 
-  // Toast State
   const [toasts, setToasts] = useState([]);
 
-  // Active Modals States
-  const [modalType, setModalType] = useState(null); // 'registerAsset' | 'allocateAsset' | 'returnAsset' | 'history' | 'addDept' | 'addCategory' | 'createAudit' | 'auditChecksheet' | 'transferRequest' | 'raiseMaintenance'
+  const [modalType, setModalType] = useState(null); 
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [selectedAudit, setSelectedAudit] = useState(null);
   
-  // Forms local states
   const [assetForm, setAssetForm] = useState({
     name: '', categoryId: '', serialNumber: '', acquisitionDate: '',
     acquisitionCost: '', condition: 'New', location: '', sharedBookable: false,
@@ -65,13 +57,10 @@ export function useAppController() {
   const [categoryForm, setCategoryForm] = useState({ name: '', customFields: [] });
   const [auditForm, setAuditForm] = useState({ name: '', scopeType: 'Department', scopeValue: '', startDate: '', endDate: '', auditorIds: [] });
   
-  // Auditor checklist status tracking
-  const [auditCheckAnswers, setAuditCheckAnswers] = useState({}); // { assetId: { status, notes } }
+  const [auditCheckAnswers, setAuditCheckAnswers] = useState({}); 
 
-  // Sync / Refresh trigger
   const [syncTrigger, setSyncTrigger] = useState(0);
 
-  // Theme Sync
   useEffect(() => {
     if (darkMode) {
       document.body.classList.add('dark-mode');
@@ -82,7 +71,6 @@ export function useAppController() {
     }
   }, [darkMode]);
 
-  // Toast Helper
   const addToast = (message, type = 'success') => {
     const id = Math.random().toString(36).substr(2, 4);
     setToasts(prev => [...prev, { id, message, type }]);
@@ -91,7 +79,6 @@ export function useAppController() {
     }, 4000);
   };
 
-  // Profile resolution on token change
   useEffect(() => {
     if (token) {
       setStoredToken(token);
@@ -109,7 +96,6 @@ export function useAppController() {
     }
   }, [token]);
 
-  // Master loading on user auth
   useEffect(() => {
     if (currentUser) {
       loadAllData();
@@ -149,7 +135,7 @@ export function useAppController() {
       }
     }).catch(err => {
       console.error('Error loading Master Data', err);
-      // Skip printing unauthorized notifications during logout flow
+      
       if (token) {
         addToast('Connection sync issue: ' + err.message, 'error');
       }
@@ -450,7 +436,7 @@ export function useAppController() {
   };
 
   return {
-    // States
+    
     darkMode, setDarkMode,
     token, setToken,
     currentUser, setCurrentUser,
@@ -477,7 +463,6 @@ export function useAppController() {
     selectedAsset, setSelectedAsset,
     selectedAudit, setSelectedAudit,
     
-    // Forms
     assetForm, setAssetForm,
     allocationForm, setAllocationForm,
     returnForm, setReturnForm,
@@ -489,11 +474,9 @@ export function useAppController() {
     auditForm, setAuditForm,
     auditCheckAnswers, setAuditCheckAnswers,
     
-    // Sync routines
     syncTrigger, setSyncTrigger,
     loadAllData,
     
-    // Actions
     handleLogout,
     handleAuthSubmit,
     handlePromote,

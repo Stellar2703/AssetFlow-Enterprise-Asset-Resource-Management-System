@@ -14,7 +14,7 @@ export default function OrgScreen(props) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      {/* Sub tabs nav */}
+      
       <div className="tab-menu" style={{ marginBottom: 0 }}>
         <button className={`tab-link ${orgTab === 'departments' ? 'active' : ''}`} onClick={() => setOrgTab('departments')}>
           🏢 Departments
@@ -27,7 +27,6 @@ export default function OrgScreen(props) {
         </button>
       </div>
 
-      {/* Departments view */}
       {orgTab === 'departments' && (
         <div className="card-flow">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>

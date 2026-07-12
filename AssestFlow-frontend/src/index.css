@@ -82,6 +82,29 @@ body {
   background: var(--color-text-muted);
 }
 
+.minimal-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-color) transparent;
+}
+
+.minimal-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.minimal-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.minimal-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.45);
+  border-radius: 9999px;
+}
+
+.minimal-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.65);
+}
+
 input[type="text"],
 input[type="number"],
 input[type="date"],

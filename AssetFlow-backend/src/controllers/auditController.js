@@ -138,7 +138,6 @@ exports.closeAudit = async (req, res) => {
 
     await Audit.closeCycle(id);
 
-    // Update statuses of affected assets
     for (const item of audit.auditItems) {
       const asset = await Asset.findById(item.assetId);
       if (asset) {
@@ -146,7 +145,7 @@ exports.closeAudit = async (req, res) => {
           await Asset.updateStatus(asset.id, 'Lost', null, null);
         } else if (item.status === 'Damaged') {
           await Asset.updateStatus(asset.id, 'Under Maintenance', null, null);
-          // Auto-generate maintenance ticket
+          
           await Maintenance.create({
             assetId: asset.id,
             raisedById: req.user.id,

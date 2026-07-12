@@ -78,7 +78,7 @@ exports.requestTransfer = async (req, res) => {
 exports.resolveTransfer = async (req, res) => {
   try {
     const { id } = req.params;
-    const { action } = req.body; // 'Approve' or 'Reject'
+    const { action } = req.body; 
 
     if (!['Approve', 'Reject'].includes(action)) {
       return res.status(400).json({ error: 'Action must be Approve or Reject' });
@@ -98,7 +98,6 @@ exports.resolveTransfer = async (req, res) => {
       return res.status(404).json({ error: 'Asset not found' });
     }
 
-    // Auth check: Admin, Asset Manager, or Department Head of source dept
     let authorized = false;
     if (req.user.role === 'Asset Manager' || req.user.role === 'Admin') {
       authorized = true;
@@ -117,13 +116,12 @@ exports.resolveTransfer = async (req, res) => {
     await Transfer.resolve(id, finalStatus, req.user.id);
 
     if (action === 'Approve') {
-      // Close active allocation
+      
       const activeAlloc = await Allocation.findActiveByAssetId(asset.id);
       if (activeAlloc) {
         await Allocation.close(activeAlloc.id, { returnCondition: asset.condition, returnNotes: 'Returned via transfer' });
       }
 
-      // Re-allocate
       await Asset.updateStatus(asset.id, 'Allocated', transfer.toEmployeeId, transfer.toDepartmentId);
       await Allocation.create({
         assetId: asset.id,

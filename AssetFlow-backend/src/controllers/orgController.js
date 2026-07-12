@@ -3,7 +3,6 @@ const Category = require('../models/Category');
 const User = require('../models/User');
 const Log = require('../models/Log');
 
-// Departments
 exports.getDepartments = async (req, res) => {
   try {
     const list = await Department.getAll();
@@ -80,7 +79,6 @@ exports.updateDepartment = async (req, res) => {
   }
 };
 
-// Categories
 exports.getCategories = async (req, res) => {
   try {
     const list = await Category.getAll();

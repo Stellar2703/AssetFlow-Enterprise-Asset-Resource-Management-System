@@ -61,7 +61,6 @@ exports.getAssetHistory = async (req, res) => {
     const cat = await Category.findById(asset.categoryId);
     asset.categoryName = cat ? cat.name : 'Unknown';
 
-    // Get allocations
     const allAllocations = await query('SELECT * FROM allocations WHERE assetId = ?', [id]);
     const users = await User.getAll();
     const depts = await Department.getAll();
@@ -87,7 +86,6 @@ exports.getAssetHistory = async (req, res) => {
       };
     });
 
-    // Get maintenance
     const allMaintenance = await query('SELECT * FROM maintenance_requests WHERE assetId = ?', [id]);
     const maintHist = allMaintenance.map(m => ({
       type: 'Maintenance',
@@ -121,7 +119,6 @@ exports.allocateAsset = async (req, res) => {
       return res.status(404).json({ error: 'Asset not found' });
     }
 
-    // Double allocation block check
     if (asset.lifecycleStatus !== 'Available') {
       let currentHolder = 'Unknown';
       if (asset.assignedToEmployeeId) {
@@ -138,7 +135,6 @@ exports.allocateAsset = async (req, res) => {
       });
     }
 
-    // Execute allocation
     const empId = allocatedToType === 'Employee' ? allocatedToId : null;
     const deptId = allocatedToType === 'Department' ? allocatedToId : null;
 
@@ -242,4 +238,3 @@ exports.getAllAllocations = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-

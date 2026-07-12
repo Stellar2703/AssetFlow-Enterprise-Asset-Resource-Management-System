@@ -40,7 +40,6 @@ exports.createBooking = async (req, res) => {
       return res.status(400).json({ error: `Resource is currently ${asset.lifecycleStatus} and cannot be booked.` });
     }
 
-    // Overlap validation
     const conflict = await Booking.checkOverlap(resourceId, startTime, endTime);
     if (conflict) {
       return res.status(409).json({

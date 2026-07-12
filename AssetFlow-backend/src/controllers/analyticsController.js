@@ -7,7 +7,7 @@ const Maintenance = require('../models/Maintenance');
 
 exports.getAnalytics = async (req, res) => {
   try {
-    // 1. Status Counts
+    
     const statusCounts = {
       Available: 0,
       Allocated: 0,
@@ -24,7 +24,6 @@ exports.getAnalytics = async (req, res) => {
       }
     });
 
-    // 2. Department-wise allocations (combined direct department allocations + employee department allocations)
     const depts = await Department.getAll();
     const deptAllocations = {};
     depts.forEach(d => {
@@ -32,7 +31,6 @@ exports.getAnalytics = async (req, res) => {
     });
     deptAllocations['Unassigned (Employees)'] = 0;
 
-    // Direct dept allocations
     const directDeptRows = await query(`
       SELECT d.name, COUNT(*) as count 
       FROM assets a 
@@ -46,7 +44,6 @@ exports.getAnalytics = async (req, res) => {
       }
     });
 
-    // Indirect employee dept allocations
     const indirectDeptRows = await query(`
       SELECT d.name, COUNT(*) as count 
       FROM assets a 
@@ -61,7 +58,6 @@ exports.getAnalytics = async (req, res) => {
       }
     });
 
-    // Unassigned employees allocations
     const unassignedRows = await query(`
       SELECT COUNT(*) as count 
       FROM assets a 
@@ -72,7 +68,6 @@ exports.getAnalytics = async (req, res) => {
       deptAllocations['Unassigned (Employees)'] = unassignedRows[0].count;
     }
 
-    // 3. Maintenance frequency by category
     const maintenanceFreq = {};
     const categories = await Category.getAll();
     categories.forEach(c => {
@@ -92,7 +87,6 @@ exports.getAnalytics = async (req, res) => {
       }
     });
 
-    // 4. Resource booking usages
     const resourceUsage = {};
     const bookableAssets = await query('SELECT name FROM assets WHERE sharedBookable = 1');
     bookableAssets.forEach(a => {
@@ -111,7 +105,6 @@ exports.getAnalytics = async (req, res) => {
       }
     });
 
-    // 5. Booking hours heatmap (0 - 23)
     const bookingHeatmap = Array(24).fill(0);
     const activeBookings = await query('SELECT startTime FROM bookings WHERE status != "Cancelled"');
     activeBookings.forEach(b => {
@@ -122,7 +115,6 @@ exports.getAnalytics = async (req, res) => {
       }
     });
 
-    // 6. Overdue Returns alert check
     const nowIso = new Date().toISOString();
     const overdueRows = await query(`
       SELECT COUNT(*) as count 

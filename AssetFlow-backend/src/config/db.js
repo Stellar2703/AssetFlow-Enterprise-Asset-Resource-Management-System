@@ -2,10 +2,13 @@ const mysql = require('mysql2/promise');
 const crypto = require('node:crypto');
 
 const dbConfig = {
-  host: 'localhost',
-  user: 'root',
-  password: 'admin'
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'admin',
+  port: parseInt(process.env.DB_PORT || '3306', 10)
 };
+
+const DB_NAME = process.env.DB_NAME || 'assetflow_db';
 
 let pool = null;
 
@@ -16,15 +19,13 @@ function hashPassword(password) {
 async function initDb() {
   console.log('Initializing MySQL Database...');
   
-  // 1. Establish temporary connection without database selected to create database
   const connection = await mysql.createConnection(dbConfig);
-  await connection.query('CREATE DATABASE IF NOT EXISTS assetflow_db;');
+  await connection.query(`CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;`);
   await connection.end();
 
-  // 2. Setup connection pool for the assetflow_db database
   pool = mysql.createPool({
     ...dbConfig,
-    database: 'assetflow_db',
+    database: DB_NAME,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
@@ -32,7 +33,6 @@ async function initDb() {
 
   console.log('Database pool created. Creating schemas if needed...');
 
-  // 3. Create tables
   await pool.query(`
     CREATE TABLE IF NOT EXISTS users (
       id VARCHAR(50) PRIMARY KEY,
@@ -202,7 +202,6 @@ async function initDb() {
 
   console.log('Tables verified. Checking if seeding is needed...');
 
-  // 4. Seed database if empty
   const [rows] = await pool.query('SELECT COUNT(*) as count FROM users');
   if (rows[0].count === 0) {
     console.log('Database is empty. Seeding initial data...');
@@ -233,7 +232,6 @@ async function seedInitialData() {
   const nowIso = new Date().toISOString();
   const todayStr = nowIso.split('T')[0];
 
-  // Seed Departments
   await pool.query(`
     INSERT INTO departments (id, name, headId, parentDepartmentId, status) VALUES
     ('${engDeptId}', 'Engineering', '${priyaId}', NULL, 'Active'),
@@ -242,7 +240,6 @@ async function seedInitialData() {
     ('${finDeptId}', 'Finance', NULL, NULL, 'Active')
   `);
 
-  // Seed Users
   await pool.query(`
     INSERT INTO users (id, name, email, passwordHash, role, departmentId, status, createdAt) VALUES
     ('${adminId}', 'System Admin', 'admin@assetflow.com', '${hashPassword('admin123')}', 'Admin', NULL, 'Active', '${nowIso}'),
@@ -254,7 +251,6 @@ async function seedInitialData() {
     ('${emp2Id}', 'Emma Watson', 'employee2@assetflow.com', '${hashPassword('emp2')}', 'Employee', '${mktDeptId}', 'Active', '${nowIso}')
   `);
 
-  // Seed Categories
   const customFieldsElec = JSON.stringify([
     { name: 'warrantyPeriod', label: 'Warranty Period (months)', type: 'number' },
     { name: 'brand', label: 'Brand', type: 'string' }
@@ -274,7 +270,6 @@ async function seedInitialData() {
     ('${catFurnId}', 'Furniture', '${customFieldsFurn}')
   `);
 
-  // Seed Assets
   const customVal1 = JSON.stringify({ warrantyPeriod: 36, brand: 'Apple' });
   const customVal2 = JSON.stringify({ warrantyPeriod: 24, brand: 'Lenovo' });
   const customVal3 = JSON.stringify({ licensePlate: 'TSLA-333', nextService: '2026-09-15' });
@@ -290,7 +285,6 @@ async function seedInitialData() {
     ('a-0005', 'AF-0005', 'Epson 4K Projector', '${catElecId}', 'EPSON-998', '2024-09-01', 999.00, 'Fair', 'IT Desk', 1, 'Under Maintenance', NULL, NULL, '${customVal5}')
   `);
 
-  // Seed Allocations
   await pool.query(`
     INSERT INTO allocations (id, assetId, allocatedToType, allocatedToId, allocatedById, allocationDate, expectedReturnDate, actualReturnDate, returnCondition, returnNotes, status) VALUES
     ('all-1', 'a-0001', 'Employee', '${priyaId}', '${managerId}', '2026-01-10', '2026-08-15', NULL, NULL, NULL, 'Active'),
@@ -298,20 +292,17 @@ async function seedInitialData() {
     ('all-3', 'a-0002', 'Employee', '${emp1Id}', '${managerId}', '2026-06-01', '2026-07-05', NULL, NULL, NULL, 'Active')
   `);
 
-  // Seed Bookings
   await pool.query(`
     INSERT INTO bookings (id, resourceId, bookedById, bookedForDepartmentId, startTime, endTime, status, createdAt) VALUES
     ('b-1', 'a-0004', '${priyaId}', '${engDeptId}', '${todayStr}T09:00:00.000Z', '${todayStr}T10:00:00.000Z', 'Completed', '${nowIso}'),
     ('b-2', 'a-0004', '${rajId}', '${mktDeptId}', '${todayStr}T13:00:00.000Z', '${todayStr}T14:00:00.000Z', 'Upcoming', '${nowIso}')
   `);
 
-  // Seed Maintenance
   await pool.query(`
     INSERT INTO maintenance_requests (id, assetId, raisedById, description, priority, status, technicianName, resolvedNotes, createdAt) VALUES
     ('m-1', 'a-0005', '${priyaId}', 'Flickering screen on HDMI input', 'High', 'In Progress', 'John Tech', NULL, '${nowIso}')
   `);
 
-  // Seed Audit
   await pool.query(`
     INSERT INTO audit_cycles (id, name, scopeType, scopeValue, startDate, endDate, auditorIds, status, createdAt) VALUES
     ('aud-1', 'Q3 IT Equipment Audit', 'Department', '${engDeptId}', '2026-07-01', '2026-07-31', '${managerId}', 'Active', '${nowIso}')
@@ -322,14 +313,12 @@ async function seedInitialData() {
     ('ai-2', 'aud-1', 'a-0002', '${managerId}', '${nowIso}', 'Missing', 'Cannot find in HQ Room 402.')
   `);
 
-  // Seed Notifications
   await pool.query(`
     INSERT INTO notifications (id, userId, title, message, \`read\`, timestamp, type) VALUES
     ('n-1', '${priyaId}', 'Asset Allocated', 'MacBook Pro 16 (AF-0001) has been allocated to you.', 0, '${nowIso}', 'allocation'),
     ('n-2', 'Role:Asset Manager', 'New Maintenance Request', 'Priya raised a maintenance request for Projector (AF-0005).', 0, '${nowIso}', 'maintenance')
   `);
 
-  // Seed Logs
   await pool.query(`
     INSERT INTO activity_logs (id, userId, userName, userRole, action, details, timestamp) VALUES
     ('l-1', 'system', 'System', 'System', 'Seed Database', 'Initial MySQL schemas and sample master data populated.', '${nowIso}')

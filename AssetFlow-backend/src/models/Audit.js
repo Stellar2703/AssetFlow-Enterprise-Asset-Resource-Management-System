@@ -7,7 +7,7 @@ class Audit {
     return rows.map(r => ({
       ...r,
       auditorIds: r.auditorIds ? r.auditorIds.split(',') : [],
-      auditItems: [] // populated by detailed queries if needed
+      auditItems: [] 
     }));
   }
 
@@ -36,9 +36,9 @@ class Audit {
   static async logItem(auditCycleId, { assetId, auditorId, status, notes }) {
     const id = 'ai-' + crypto.randomBytes(8).toString('hex');
     const now = new Date().toISOString();
-    // Remove any existing log for this asset in this audit cycle
+    
     await query('DELETE FROM audit_items WHERE auditCycleId = ? AND assetId = ?', [auditCycleId, assetId]);
-    // Insert new check log
+    
     await query(
       'INSERT INTO audit_items (id, auditCycleId, assetId, auditorId, checkedAt, status, notes) VALUES (?, ?, ?, ?, ?, ?, ?)',
       [id, auditCycleId, assetId, auditorId, now, status, notes || '']

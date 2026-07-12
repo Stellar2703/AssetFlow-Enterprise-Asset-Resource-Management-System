@@ -358,9 +358,9 @@ flowchart TD
 
 | Contributor | Focus |
 | --- | --- |
-| Add your name | Frontend UI, layout, and screen interactions |
-| Add your name | Backend API, database schema, and auth flow |
-| Add your name | Testing, documentation, and demo preparation |
+| Abinisha | Frontend UI, layout, and screen interactions |
+| Jeevitha | Backend API, database schema, and auth flow |
+| Shashwath | Testing, documentation, and demo preparation |
 
 ## License
 

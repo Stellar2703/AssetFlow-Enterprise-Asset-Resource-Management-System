@@ -21,8 +21,7 @@ class Booking {
   }
 
   static async checkOverlap(resourceId, startTime, endTime) {
-    // Find active bookings that overlap with requested range
-    // startA < endB && endA > startB
+    
     const rows = await query(`
       SELECT b.*, u.name as bookedByName FROM bookings b
       JOIN users u ON u.id = b.bookedById
